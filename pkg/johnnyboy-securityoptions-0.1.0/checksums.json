@@ -1,0 +1,15 @@
+{
+  "Gemfile": "bcba388166bb523d562075f9723422c8",
+  "Rakefile": "0254db5d3fc38c67a2c160d7296a24f8",
+  "Readme": "585c549fcee7fa2c1a0a63de518bcf21",
+  "lib/puppet/provider/so_systemaccess/so_systemaccess.rb": "2262dbb8f3ebaa5512a909399ef31776",
+  "lib/puppet/type/so_registryvalue.rb": "21ed6be8682d91f3fc04990d14fa3ff4",
+  "lib/puppet/type/so_systemaccess.rb": "1ea57455e2072caff8b331c2879a9077",
+  "lib/puppet_x/securityoptions/secedit_mapping.json": "0b6edc580dfed3f10a946dbcd6fbbc9a",
+  "lib/puppet_x/securityoptions/secedit_mapping.rb": "02ab4ce0e530fc4d4b27eed2dc9800e1",
+  "metadata.json": "8d7fe1d2bfbc85b67b487e2bf2ac336a",
+  "spec/fixtures/unit/puppet/provider/user_right/secedit/full.txt": "edd6fbf3d5752eec3f9e0dbd0d1ad32f",
+  "spec/fixtures/unit/puppet_x/security_options/secedit_helper_spec.rb": "68b329da9893e34099c7d8ad5cb9c940",
+  "spec/spec_helper.rb": "34fa6b1925b8208e733575d5e24be97f",
+  "spec/unit/puppet/type/so_registryvalue_spec.rb": "8924b471858ab53d3943c0d2daf55f7e"
+}
