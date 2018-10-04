@@ -150,7 +150,7 @@ describe Puppet::Type.type(:so_registryvalue).provider(:so_registryvalue) do
     def stub_write_export
         expect(Puppet).to receive(:[]).at_least(:once).with(:cachedir).and_return(cachedir)
         expect(Dir).to receive(:mkdir).at_least(:once).with(File.join(cachedir, 'rvimports'))
-
+        expect(File).to receive(:open).at_least(:once).with("C:\\ProgramData\\PuppetLabs\\Puppet\\cache\\rvimports\\Audit: Audit the use of Backup and Restore privilege.txt", 'w')
     end
 
     def stub_flush(path)
