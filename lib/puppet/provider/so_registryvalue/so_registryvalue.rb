@@ -84,18 +84,10 @@ Revision=1
     end
 
     def self.instances
-        settings = []
-        inst1 = []
-        registryvalues_hash=[]
         out_file_path = File.join(Puppet[:cachedir], 'rvsecurityoptionsoutput.txt').gsub('/', '\\')
         # Once the file exists in UTF-8, secedit will also use UTF-8
         File.open(out_file_path, 'w') { |f| f.write('# We want UTF-8') }
         secedit('/export', '/cfg', out_file_path, '/areas', 'securitypolicy')
-        #inst1=getregistryvalues(out_file_path)
-        #puts inst1.class
-        #inst2=getsystemaccess(out_file_path)
-        #puts inst2.class
-        #puts inst2
         return getregistryvalues(out_file_path) 
     end
 
@@ -117,14 +109,11 @@ Revision=1
         elsif res_mapping['reg_type'] == '4' then
         end
 
-        #policy_hash = {
         new({
           :name      => res_displayname,
           :ensure    => :present,
           :regvalue   => value,
         })
-        #inst = new(policy_hash)
-        #registryvalues_hash << inst
       }
 
    end
