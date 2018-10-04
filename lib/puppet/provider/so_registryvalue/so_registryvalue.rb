@@ -101,11 +101,7 @@ Revision=1
         if res_mapping['reg_type'] == '3' || res_mapping['reg_type'] == '4' then
           value = value.to_i
         elsif res_mapping['reg_type'] == '7' then
-          if value == '' then
-            value = []
-          else
-            value = value.split(',')
-          end
+          value = value.split(',')
         elsif res_mapping['reg_type'] == '4' then
         end
 
