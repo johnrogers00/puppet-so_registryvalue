@@ -37,7 +37,7 @@ describe Puppet::Type.type(:so_registryvalue).provider(:so_registryvalue) do
     def stub_secedit_export
         ini_stub = Puppet::Util::IniFile.new(File.join(
             File.dirname(__FILE__), "../../../../fixtures/unit/puppet/provider/so_registryvalue/so_registryvalue/rvsecurityoptionsoutput.txt"), '=')
-        expect(Puppet).to receive(:[]).at_least(:once).with(:cachedir).and_return('C:\ProgramData\PuppetLabs\Puppet\cache')
+        expect(Puppet).to receive(:[]).at_least(:once).with(:cachedir).and_return(cachedir)
         expect(File).to receive(:open).at_least(:once).with(out_file, 'w')
         expect(provider.class).to receive(:secedit).at_least(:once).with('/export', '/cfg', out_file, '/areas', 'securitypolicy')
         expect(Puppet::Util::IniFile).to receive(:new).at_least(:once).with(out_file, '=')
@@ -144,6 +144,27 @@ describe Puppet::Type.type(:so_registryvalue).provider(:so_registryvalue) do
             :regvalue => ["System\\CurrentControlSet\\Control\\Print\\Printers", "System\\CurrentControlSet\\Services\\Eventlog", "Software\\Microsoft\\OLAP Server", "Software\\Microsoft\\Windows NT\\CurrentVersion\\Print", "Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows", "System\\CurrentControlSet\\Control\\ContentIndex", "System\\CurrentControlSet\\Control\\Terminal Server", "System\\CurrentControlSet\\Control\\Terminal Server\\UserConfig", "System\\CurrentControlSet\\Control\\Terminal Server\\DefaultUserConfiguration", "Software\\Microsoft\\Windows NT\\CurrentVersion\\Perflib", "System\\CurrentControlSet\\Services\\SysmonLog"],
           })
 
+        end
+    end
+
+    def stub_write_export
+        expect(Puppet).to receive(:[]).at_least(:once).with(:cachedir).and_return(cachedir)
+        expect(Dir).to receive(:mkdir).at_least(:once).with(File.join(cachedir, 'rvimports'))
+
+    end
+
+    def stub_flush(path)
+        expect(provider.class).to receive(:secedit).at_least(:once).with('/configure', '/db', 'secedit.sdb', '/cfg', path)
+    end
+
+    context 'when updating value' do
+        it 'should update value' do
+            stub_write_export
+            expect(provider.regvalue).to eq(nil)
+            provider.regvalue=3
+            expect(provider.regvalue).to eq(3)
+            stub_flush("C:\\ProgramData\\PuppetLabs\\Puppet\\cache\\rvimports\\Audit: Audit the use of Backup and Restore privilege.txt")
+            provider.flush
         end
     end
 end
