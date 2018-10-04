@@ -55,30 +55,24 @@ describe Puppet::Type.type(:so_registryvalue).provider(:so_registryvalue) do
             .and_return(ini_stub)
     end
 
-    describe "responds to" do
+    context "when checking standard methods" do
       [:exists?, :create, :destroy, :regvalue, :regvalue=].each { |method|
         it { is_expected.to respond_to(method) }
       }
     end
 
-    describe 'exists' do
-        before(:each) do
-          stub_secedit_export
-          @instances = provider.class.instances.map do |i| {
-            :name     => i.get(:name),
-            :ensure   => i.get(:ensure),
-            :regvalue => i.get(:regvalue),
-            }
-          end
+    context "when using prefetch" do
+        it 'should not exist before prefetch' do
+            expect(resource.provider.exists?).to eq(false)
+            expect(resource.provider.regvalue).to eq(nil)
         end
 
-
-      it 'exists' do
-        #provider.class.instances
-        catalog = Puppet::Resource::Catalog.new
-        catalog.add_resource resource
-        provider.class.prefetch(hashresource)
-      end
+        it 'should exist after prefetch' do
+            stub_secedit_export
+            provider.class.prefetch(hashresource)
+            expect(resource.provider.exists?).to eq(true)
+            expect(resource.provider.regvalue).to eq(42)
+        end
     end
 
 
