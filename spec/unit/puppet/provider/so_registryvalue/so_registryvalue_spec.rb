@@ -147,10 +147,19 @@ describe Puppet::Type.type(:so_registryvalue).provider(:so_registryvalue) do
         end
     end
 
-    def stub_write_export
+    def stub_write_export(value)
         expect(Puppet).to receive(:[]).at_least(:once).with(:cachedir).and_return(cachedir)
         expect(Dir).to receive(:mkdir).at_least(:once).with(File.join(cachedir, 'rvimports'))
-        expect(File).to receive(:open).at_least(:once).with("C:\\ProgramData\\PuppetLabs\\Puppet\\cache\\rvimports\\Audit: Audit the use of Backup and Restore privilege.txt", 'w')
+        writeFile = StringIO.new
+        expect(File).to receive(:open).at_least(:once).with("C:\\ProgramData\\PuppetLabs\\Puppet\\cache\\rvimports\\Audit: Audit the use of Backup and Restore privilege.txt", 'w').and_yield(writeFile)
+        expect(writeFile).to receive(:write).with("[Unicode]
+Unicode=yes
+[Registry Values]
+Audit: Audit the use of Backup and Restore privilege = #{value}
+[Version]
+signature=\"$CHICAGO$\"
+Revision=1
+")
     end
 
     def stub_flush(path)
@@ -159,7 +168,7 @@ describe Puppet::Type.type(:so_registryvalue).provider(:so_registryvalue) do
 
     context 'when updating value' do
         it 'should update value' do
-            stub_write_export
+            stub_write_export(3)
             expect(provider.regvalue).to eq(nil)
             provider.regvalue=3
             expect(provider.regvalue).to eq(3)
