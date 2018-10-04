@@ -1,0 +1,5 @@
+fixtures:
+  forge_modules:
+    inifile: 'puppetlabs/inifile'
+  symlinks:
+    so_registryvalue: "#{source_dir}"
