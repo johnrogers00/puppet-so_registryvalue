@@ -1,6 +1,5 @@
 require 'puppet/util/windows'
 require 'pathname'
-#just adding some comments
 
 begin
   require File.expand_path('../../../util/ini_file', __FILE__)
@@ -45,7 +44,6 @@ Puppet::Type.type(:so_registryvalue).provide(:so_registryvalue) do
 
     def write_export(securityoption, value)
 
-        Puppet.debug "what is res mapping" 
         dir = File.join(Puppet[:cachedir], 'rvimports')
         Dir.mkdir(dir) unless Dir.exist?(dir)
 
