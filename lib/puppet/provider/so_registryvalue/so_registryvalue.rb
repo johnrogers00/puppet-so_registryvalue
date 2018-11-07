@@ -1,6 +1,6 @@
 require 'puppet/util/windows'
 require 'pathname'
-
+#mycomment
 begin
   require File.expand_path('../../../util/ini_file', __FILE__)
 rescue LoadError
